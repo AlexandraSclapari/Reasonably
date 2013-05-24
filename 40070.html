@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>An affordable place to live</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+	  
+	   body {
+	   height: 100%; 
+      }
+	  
+	  #map_canvas {
+	    height: 460px;
+	 }
+     
+	 input[type="range"]:before {
+     left:0em;
+     content: attr(for);
+     }
+	 
+    input[type="range"]:after {
+    right: 0em;
+    content: attr(name);
+	}
+	</style>
+	
+    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+	
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+	<script type="text/javascript">
+
+	function initialize() {
+	    var tableId = '1k3AShXjBtRANFyDJ6mT4gLk7MRGE10tXjRHHGwo';
+		var map = new google.maps.Map(document.getElementById('map_canvas'), {
+		center: new google.maps.LatLng(-31.782354675478942, 136.97968706250003),
+		zoom: 5,
+		mapTypeId: google.maps.MapTypeId.ROADMAP
+	});
+	map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(document.getElementById('googft-legend'));
+
+	var layer = new google.maps.FusionTablesLayer({
+		map: map,
+		heatmap: { enabled: false },
+		query: {
+			select: 'geometry' ,
+			from: tableId
+		}, 
+		options: {
+		   styleId: 2,
+		   templateId: 2
+		},
+		styles: [{
+			polygonOptions: {
+			  fillColor: "#CCCCCC",
+			  fillOpacity: 0.5
+			}
+		}]
+	});
+	layer.setMap(map);
+	
+	google.maps.event.addListener(map, 'click', function() {
+    var test=document.getElementByid('googft-info-window').value;
+    alert(test);
+  });
+}
+
+	google.maps.event.addDomListener(window, 'load', initialize);
+	
+	
+	function changeMap(tableValue, fusionLayer) { 
+    var newStyle = {
+	 styles: [
+	{
+		where: tableValue +" < 0.2",
+		polygonOptions: {
+		fillColor: "#CC0000",
+		fillOpacity: 0.8
+		}
+	} , {
+		where: tableValue +" >= 0.2 AND " +tableValue + " <0.4",
+		polygonOptions: {
+		fillColor: "#9D183B",
+		fillOpacity: 0.8
+		}
+	} ,{
+		where: tableValue +" >= 0.4 AND " +tableValue + " <0.6",
+		polygonOptions: {
+		fillColor: "#4E3F9D",
+		fillOpacity: 0.8
+		}
+	} , {
+		where: tableValue +" >= 0.6 AND " +tableValue + " <0.8",
+		polygonOptions: {
+		fillColor: "#1F56D8",
+		fillOpacity: 0.8
+		}
+	} , {
+		where: tableValue +" >= 0.8" ,
+		polygonOptions: {
+		fillColor: "#0066FF",
+		fillOpacity: 0.8
+		}
+	}
+	
+	] }
+
+    fusionLayer.setOptions(newStyle
+    );
+};
+	
+	
+ function updateMap(layer, tableId){ 
+    option1 = "";
+	option2 = "";
+	option3 = "";
+	option4 = "" ;
+	option5 = "" ; 
+	if (document.getElementById('optionsRadios1').checked==true) {
+	  var option1 = document.getElementById('optionsRadios1').value;
+	} 
+	
+	if (document.getElementById('optionsRadios2').checked==true) {
+	  var option2 = document.getElementById('optionsRadios2').value;
+	} 
+	
+	if (document.getElementById('optionsRadios3').checked==true) {
+	  var option3 = document.getElementById('optionsRadios3').value;
+	} 
+	
+	if (document.getElementById('optionsRadios4').checked==true) {
+	  var option4 = document.getElementById('optionsRadios4').value;
+	} 
+	
+	if (document.getElementById('optionsRadios5').checked==true) {
+	  var option5 = document.getElementById('optionsRadios5').value;
+	} 
+	
+	var query = "";
+	if (option1 != "") {
+	query = option1 ;
+	} 
+	if ((option2 != "") && (query != "")) {
+	query = query + "+" + option2;
+    } 
+	if ((option2 != "") && (query == "")) {
+	query = option2;
+    } 
+	if ((option3 != "") && (query != "")) {
+	query = query + "+" + option3;
+    } 
+	if ((option3 != "") && (query == "")) {
+	query = option3;
+    } 
+	if ((option4 != "") && (query != "")) {
+    query = query + "+" + option4;
+    }
+	if ((option4 != "") && (query == "")) {
+	query = option4;
+    } 
+	if ((option5 != "") && (query != "")) {
+    query = query + "+" + option5;
+	}
+	if ((option5 != "") && (query == "")) {
+	query = option5;
+    } 
+	query = "n_"+query;
+	
+	var tableId = '1k3AShXjBtRANFyDJ6mT4gLk7MRGE10tXjRHHGwo';
+		var locationColumn = 'geometry'; 
+		var map = new google.maps.Map(document.getElementById('map_canvas'), {
+		center: new google.maps.LatLng(-31.782354675478942, 136.97968706250003),
+		zoom: 5,
+		mapTypeId: google.maps.MapTypeId.ROADMAP
+	});
+	map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(document.getElementById('googft-legend'));
+
+	layer = new google.maps.FusionTablesLayer({
+		map: map,
+		heatmap: { enabled: false },
+		query: {
+			select: locationColumn ,
+			from: tableId
+		},
+		options: {
+		   styleId: 2,
+		   templateId: 2
+		}
+	});	
+	changeMap(query,layer);	
+	}
+  </script>
+
+	
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="assets/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
+                    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
+                                   <link rel="shortcut icon" href="assets/ico/favicon.png">
+  </head>
+
+   
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="#">An affordable place to live</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li class="divider"></li>
+                  <li class="nav-header">Nav header</li>
+                  <li><a href="#">Separated link</a></li>
+                  <li><a href="#">One more separated link</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <!-- Main hero unit for a primary marketing message or call to action -->
+	  <div class="hero-unit">
+        <h1>Adelaide</h1>
+      </div>
+	  
+        <div class="row-fluid">
+			<div class="span12">
+				<div class="row-fluid">
+					<div class="span6">
+					<p>
+					<ul>
+					<li><b>Net tax as a proportion of taxable income (Percent): </b> 27 </li>
+					<li><b>Social Housing stock:</b> 743 </li>
+					<li><b>Average Wage and salary income ($):</b> 50004 </li>
+					<li><b>Average monthly household rental payment ($): </b> 1448 </li>
+					<li><b>Unemployment rate:</b> 8.1 </li>
+					<ul>
+					</p>
+					
+					</div>	
+        
+        
+				<div class="span6">
+					<div id="disqus_thread"></div>
+				<script type="text/javascript">
+				
+				var disqus_shortname = 'reasonably'; // required: replace example with your forum shortname
+
+				(function() {
+					var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+					dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+					(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+				})();
+				</script>
+				</div>
+			</div>
+		</div>
+		
+		
+		<div class="row-fluid">
+			<div class="span12">
+			
+			
+    
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    
+			
+			
+			</div>
+		</div>
+			
+			
+		
+			
+		
+     
+		
+		
+
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="span4">
+           
+        </div>
+        <div class="span4">
+          
+       </div>
+        <div class="span4">
+          
+        </div>
+      </div>
+
+      <hr>
+
+      <footer>
+        <p>&copy; Company 2013</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://twitter.github.io/bootstrap/assets/js/jquery.js"></script>
+    <script src="http://twitter.github.io/bootstrap/assets/js/bootstrap-transition.js"></script>
+    <script src="http://twitter.github.io/bootstrap/assets/js/bootstrap-alert.js"></script>
+    <script src="http://twitter.github.io/bootstrap/assets/js/bootstrap-modal.js"></script>
+    <script src="http://twitter.github.io/bootstrap/assets/js/bootstrap-dropdown.js"></script>
+    <script src="http://twitter.github.io/bootstrap/assets/js/bootstrap-scrollspy.js"></script>
+    <script src="http://twitter.github.io/bootstrap/assets/js/bootstrap-tab.js"></script>
+    <script src="http://twitter.github.io/bootstrap/assets/js/bootstrap-tooltip.js"></script>
+    <script src="http://twitter.github.io/bootstrap/assets/js/bootstrap-popover.js"></script>
+    <script src="http://twitter.github.io/bootstrap/assets/js/bootstrap-button.js"></script>
+    <script src="http://twitter.github.io/bootstrap/assets/js/bootstrap-collapse.js"></script>
+    <script src="http://twitter.github.io/bootstrap/assets/js/bootstrap-carousel.js"></script>
+    <script src="http://twitter.github.io/bootstrap/assets/js/bootstrap-typeahead.js"></script>
+
+  </body>
+</html>
+
+
+
+
+
+
+
+ 
