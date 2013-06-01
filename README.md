@@ -1,17 +1,15 @@
 ==========
 Reasonably
 ==========
-You are a South Australian citizen and you're not satisfied with you monthly revenu, you think you pay heavy taxes or you spend too much money on you housing.
+You are a South Australian citizen and you're not satisfied with you monthly revenue, you think you pay heavy taxes or you spend too much money on your housing.
 
 
 ==========
 Data sources
 ==========
-Australian Bureau of Statistics: National Regional Profile 2007-2011
-Local Government Areas: http://data.sa.gov.au/dataset/local-government-areas
+South Australian Governement:
+We used the Local Government Area boundaries, the number of social housing per Local Government Area and the description of senior discount offered in the South Australia areas.
 
-==========
-How to use it
-==========
-
+Australian Bureau of Statistics:
+We used the national regional profil csv file where we get statistics about the average income, the unemployment rate, the average rental payment, and the % of taxes paid.
 
