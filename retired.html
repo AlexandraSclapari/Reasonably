@@ -19,8 +19,17 @@
 	   height: 100%; 
       }
 	  
+	  .hero-unit {
+	  padding: 20px;
+	  }
+	  
+	  
 	  #map_canvas {
 	    height: 460px;
+	 }
+	 
+	 #legend {
+      padding: 10px;
 	 }
      
 	 
@@ -30,23 +39,20 @@
 	
 
 	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-	<script type="text/javascript" src="https://www.google.com/jsapi?key=AIzaSyAtXIRgoaUxDwIa6cFVL0ouq7ht-K7EEK0"></script>
 	
-	<script type="text/javascript">
-		google.load("jquery", "1.6.1");
-	</script>
+	
 	
 	<script type="text/javascript">
 
 	function initialize() {
-	    var tableId = '11SFrOl98oMY3oXSnu4bfQyZg_KAT8pNwr3uzbPY';
+	    var tableId = '1k3AShXjBtRANFyDJ6mT4gLk7MRGE10tXjRHHGwo';
 		//var locationColumn = "col5\x3e\x3e0"; 
 		var map = new google.maps.Map(document.getElementById('map_canvas'), {
-		center: new google.maps.LatLng(-31.782354675478942, 136.97968706250003),
+		center: new google.maps.LatLng(-32.782354675478942, 135.97968706250003),
 		zoom: 5,
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	});
-	map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(document.getElementById('googft-legend'));
+	
 
 	var layer = new google.maps.FusionTablesLayer({
 		map: map,
@@ -67,6 +73,13 @@
 	
 	});
 	layer.setMap(map);
+	
+	var legend = document.getElementById('legend');
+		var div = document.createElement('div');
+		div.innerHTML = '<img src=legend.png>' ;
+		legend.appendChild(div);
+	
+	map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(document.getElementById('legend'));	
 }
 
 	google.maps.event.addDomListener(window, 'load', initialize);
@@ -82,33 +95,33 @@
 		}
 	},*/
 	{
-		where: tableValue +" < 0.2",
+		where: "'"+tableValue +"' < 0.2",
 		polygonOptions: {
 		fillColor: "#CC0000",
 		fillOpacity: 0.8
 		}
 	} , {
-		where: tableValue +" >= 0.2 AND " +tableValue + " <0.4",
+		where: "'"+tableValue +"' >= 0.2 AND " +"'"+tableValue + "' <0.4",
 		polygonOptions: {
 		fillColor: "#9D183B",
 		fillOpacity: 0.8
 		}
 	} ,{
-		where: tableValue +" >= 0.4 AND " +tableValue + " <0.6",
+		where: "'"+tableValue +"' >= 0.4 AND " +"'"+tableValue + "' <0.6",
 		polygonOptions: {
 		fillColor: "#4E3F9D",
 		fillOpacity: 0.8
 		}
 	} , {
-		where: tableValue +" >= 0.6 AND " +tableValue + " <0.8",
+		where: "'"+tableValue +"' >= 0.6 AND " +"'"+tableValue + "' <0.8",
 		polygonOptions: {
 		fillColor: "#1F56D8",
 		fillOpacity: 0.8
 		}
 	} , {
-		where: tableValue +" >= 0.8" ,
+		where: "'"+tableValue +"' >= 0.8" ,
 		polygonOptions: {
-		fillColor: "#0066FF",
+		fillColor: "#00B9F1",
 		fillOpacity: 0.8
 		}
 	}
@@ -156,16 +169,17 @@
     } 
 	
 	query = "n_"+query;
-	alert(query);
+	//alert(query);
 	
-	var tableId = '11SFrOl98oMY3oXSnu4bfQyZg_KAT8pNwr3uzbPY';
+	
+	var tableId = '1k3AShXjBtRANFyDJ6mT4gLk7MRGE10tXjRHHGwo';
 		var locationColumn = 'geometry'; 
 		var map = new google.maps.Map(document.getElementById('map_canvas'), {
-		center: new google.maps.LatLng(-31.782354675478942, 136.97968706250003),
+		center: new google.maps.LatLng(-32.782354675478942, 135.97968706250003),
 		zoom: 5,
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	});
-	map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(document.getElementById('googft-legend'));
+	
 
 	firstLayer = new google.maps.FusionTablesLayer({
 		map: map,
@@ -201,6 +215,19 @@
 	} 
 	
 	
+	var span = document.getElementById('span9');
+		var div_legend = document.createElement('div');
+		span.appendChild(div_legend);
+		div_legend.setAttribute("id","legend");
+		
+		var legend = document.getElementById('legend');
+		var div = document.createElement('div');
+		div.innerHTML = '<img src=legend.png>' ;
+		legend.appendChild(div);
+	
+	map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(document.getElementById('legend'));
+	
+	
 	
 	
 
@@ -231,17 +258,13 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="brand" href="#">An affordable place to live</a>
+          
+          <a class="brand" href="index.html">An affordable place to live</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li class="active"><a href="index.html">Home</a></li>
-              <li><a href="#about">Data Source</a></li>
-              <li><a href="#contact"></a></li>
+             <li ><a href="index.html">Home</a></li>
+			  <li ><a href="doc.html">Documentation</a></li>
+              <li><a href="https://github.com/AlexandraSclapari/Reasonably">Source code</a></li>
                 </ul>
               </li>
             </ul>
@@ -254,7 +277,7 @@
 
       <!-- Main hero unit for a primary marketing message or call to action -->
 	  <div class="hero-unit">
-        <h2>Select your criteria for an affordable place</h2>
+        <h2>Select your criterias for an affordable place</h2>
       </div>
 	  
         <div class="row-fluid">
@@ -264,16 +287,16 @@
 					
 					<label class="checkbox">
 						<input type="checkbox"  name="optionsRadios" id="optionsRadios1" value="tax" checked>
-						Pourcentage of tax
+						Level of tax
 						</label>
 						<label class="checkbox">
 						<input type="checkbox" name="optionsRadios" id="optionsRadios2" value="rent">
-						Average monthly rental payment
+						Average rental payment
 						</label>
 						</label>
 						<label class="checkbox">
 						<input type="checkbox" name="optionsRadios" id="optionsRadios3" value="social">
-						Number of social housing
+						Social housing density
 						</label>
 						<br> <br> <br>
 						<label class="checkbox">
@@ -285,57 +308,24 @@
 					</div>	
         
         
-				<div class="span9">
+				<div class="span9" id="span9">
 					<div id='map_canvas'></div>
+					</div> 
+						<div id='legend'>  <!--<img src='legend.png' > -->
+						
+					</div>
 				</div>
 			</div>
 		</div>
 			
-			
 		
-			
-		
-     
-		
-		
-
-      <!-- Example row of columns -->
-      <div class="row">
-        <div class="span4">
-           
-        </div>
-        <div class="span4">
-          
-       </div>
-        <div class="span4">
-          
-        </div>
-      </div>
-
       <hr>
 
       <footer>
-        <p>&copy; Company 2013</p>
+        
       </footer>
 
     </div> <!-- /container -->
-
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="http://twitter.github.io/bootstrap/assets/js/jquery.js"></script>
-    <script src="http://twitter.github.io/bootstrap/assets/js/bootstrap-transition.js"></script>
-    <script src="http://twitter.github.io/bootstrap/assets/js/bootstrap-alert.js"></script>
-    <script src="http://twitter.github.io/bootstrap/assets/js/bootstrap-modal.js"></script>
-    <script src="http://twitter.github.io/bootstrap/assets/js/bootstrap-dropdown.js"></script>
-    <script src="http://twitter.github.io/bootstrap/assets/js/bootstrap-scrollspy.js"></script>
-    <script src="http://twitter.github.io/bootstrap/assets/js/bootstrap-tab.js"></script>
-    <script src="http://twitter.github.io/bootstrap/assets/js/bootstrap-tooltip.js"></script>
-    <script src="http://twitter.github.io/bootstrap/assets/js/bootstrap-popover.js"></script>
-    <script src="http://twitter.github.io/bootstrap/assets/js/bootstrap-button.js"></script>
-    <script src="http://twitter.github.io/bootstrap/assets/js/bootstrap-collapse.js"></script>
-    <script src="http://twitter.github.io/bootstrap/assets/js/bootstrap-carousel.js"></script>
-    <script src="http://twitter.github.io/bootstrap/assets/js/bootstrap-typeahead.js"></script>
 
   </body>
 </html>
